@@ -4,6 +4,7 @@ import br.com.votacao.api.entity.Usuario;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -14,8 +15,10 @@ public class UsuarioDTO implements Serializable {
 
     private Long id;
 
+    @NotNull(message = "{usuario.nome.notempty}")
     private String nome;
 
+    @NotNull(message = "{usuario.cpf.notempty}")
     private String cpf;
 
     public static UsuarioDTO valueOf(Usuario usuario) {

@@ -4,6 +4,8 @@ import br.com.votacao.api.entity.Pauta;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
@@ -12,9 +14,15 @@ public class PautaDTO implements Serializable {
 
     private static final long serialVersionUID = -5463577171309546021L;
 
+
     private Long id;
-     private String nome;
-     private String descricao;
+
+    @NotNull(message = "{pauta.nome.notempty}")
+    private String nome;
+
+    @NotNull
+    @Size(min = 10, message = "{pauta.descricao.size}")
+    private String descricao;
 
     public static PautaDTO valueOf(Pauta pauta) {
         return PautaDTO.builder()
