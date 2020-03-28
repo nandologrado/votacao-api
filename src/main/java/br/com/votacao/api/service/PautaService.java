@@ -2,11 +2,10 @@ package br.com.votacao.api.service;
 
 import br.com.votacao.api.dto.PautaDTO;
 import br.com.votacao.api.entity.Pauta;
-import br.com.votacao.api.entity.Sessao;
+import br.com.votacao.api.exception.PautaDeleteException;
 import br.com.votacao.api.exception.PautaNotFoundException;
 import br.com.votacao.api.repository.PautaRepository;
 import br.com.votacao.api.repository.SessaoRepository;
-import br.com.votacao.api.exception.PautaDeleteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

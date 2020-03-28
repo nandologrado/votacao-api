@@ -37,7 +37,7 @@ public class PautaController {
     }
 
     @PostMapping
-    ResponseEntity<PautaDTO> save(@Valid @RequestBody PautaDTO pautaDTO) {
+    ResponseEntity<PautaDTO> save(@RequestBody PautaDTO pautaDTO) {
         return new ResponseEntity<>(pautaDTO.valueOf(service.save(pautaDTO)), HttpStatus.CREATED);
     }
 
