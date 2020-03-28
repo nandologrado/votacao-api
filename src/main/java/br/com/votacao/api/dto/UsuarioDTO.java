@@ -18,11 +18,11 @@ public class UsuarioDTO implements Serializable {
 
     private String cpf;
 
-    public static UsuarioDTO valueOf(Usuario user) {
+    public static UsuarioDTO valueOf(Usuario usuario) {
         return UsuarioDTO.builder()
-                .id(user.getId())
-                .nome(user.getNome())
-                .cpf(user.getCpf())
+                .id(usuario.getId())
+                .nome(usuario.getNome())
+                .cpf(usuario.getCpf())
                 .build();
     }
 
