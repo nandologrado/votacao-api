@@ -3,12 +3,15 @@ package br.com.votacao.api.controller;
 import br.com.votacao.api.dto.SessaoDTO;
 import br.com.votacao.api.dto.SessaoRequestDTO;
 import br.com.votacao.api.dto.SessaoResultadoDTO;
+import br.com.votacao.api.exception.BusinessException;
 import br.com.votacao.api.service.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -43,7 +46,10 @@ public class SessaoController {
     }
 
     @PostMapping
-    ResponseEntity<SessaoDTO> save(@RequestBody SessaoRequestDTO sessaoRequestDTO) {
+    ResponseEntity<SessaoDTO> save(@RequestBody @Valid SessaoRequestDTO sessaoRequestDTO, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new BusinessException(errors.toString());
+        }
         return new ResponseEntity<>(SessaoDTO.valueOf(service.save(sessaoRequestDTO)), HttpStatus.CREATED);
     }
 

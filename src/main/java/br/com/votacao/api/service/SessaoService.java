@@ -75,7 +75,7 @@ public class SessaoService {
     private SessaoResultadoDTO createSessaoResultado(Sessao sessao, List<Votacao> votacoes) {
         return SessaoResultadoDTO.builder()
                 .pautaDTO(PautaDTO.valueOf(sessao.getPauta()))
-                .durationMinutes(Duration.between(sessao.getDataInicio(), sessao.getDataFim()).toMinutes())
+                .duracaoMinutos(Duration.between(sessao.getDataInicio(), sessao.getDataFim()).toMinutes())
                 .sessaoResultadoVotosDTO(createSessaoResultadoVotos(votacoes))
                 .build();
     }

@@ -1,12 +1,15 @@
 package br.com.votacao.api.controller;
 
 import br.com.votacao.api.dto.PautaDTO;
+import br.com.votacao.api.exception.BusinessException;
 import br.com.votacao.api.service.PautaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -36,7 +39,10 @@ public class PautaController {
     }
 
     @PostMapping
-    ResponseEntity<PautaDTO> save(@RequestBody PautaDTO pautaDTO) {
+    ResponseEntity<PautaDTO> save(@RequestBody @Valid PautaDTO pautaDTO, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new BusinessException(errors.toString());
+        }
         return new ResponseEntity<>(pautaDTO.valueOf(service.save(pautaDTO)), HttpStatus.CREATED);
     }
 

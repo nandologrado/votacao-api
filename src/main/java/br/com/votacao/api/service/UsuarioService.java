@@ -2,9 +2,11 @@ package br.com.votacao.api.service;
 
 import br.com.votacao.api.dto.UsuarioDTO;
 import br.com.votacao.api.entity.Usuario;
+import br.com.votacao.api.exception.CpfInvalidException;
 import br.com.votacao.api.exception.UsuarioExistsException;
 import br.com.votacao.api.exception.UsuarioNotFoundException;
 import br.com.votacao.api.repository.UsuarioRepository;
+import br.com.votacao.api.utils.CpfUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,10 @@ public class UsuarioService {
 
     @Transactional(readOnly = false)
     public Usuario save(UsuarioDTO usuarioDTO) {
+        if(!CpfUtils.isCPF(usuarioDTO.getCpf())){
+            throw new CpfInvalidException(usuarioDTO.getCpf());
+        }
+
         if (Optional.ofNullable(repository.findByCpf(usuarioDTO.getCpf())).isPresent()) {
             throw new UsuarioExistsException(usuarioDTO.getCpf());
         }
