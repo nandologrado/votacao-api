@@ -3,6 +3,7 @@ package br.com.votacao.api.controller;
 import br.com.votacao.api.dto.PautaDTO;
 import br.com.votacao.api.exception.BusinessException;
 import br.com.votacao.api.service.PautaService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class PautaController {
         this.service = service;
     }
 
+    @ApiOperation(value = "Retorna todas a pautas cadastradas")
     @GetMapping
     ResponseEntity<List<PautaDTO>> findAll() {
         return new ResponseEntity<>(service.findAll()
@@ -33,11 +35,13 @@ public class PautaController {
                 .collect(toList()), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna uma pauta pelo seu ID")
     @GetMapping("/{id}")
     ResponseEntity<PautaDTO> findById(@PathVariable(value = "id") Long id) {
         return new ResponseEntity<>(PautaDTO.valueOf(service.findById(id)), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Salva uma Pauta")
     @PostMapping
     ResponseEntity<PautaDTO> save(@RequestBody @Valid PautaDTO pautaDTO, Errors errors) {
         if (errors.hasErrors()) {
@@ -46,6 +50,7 @@ public class PautaController {
         return new ResponseEntity<>(pautaDTO.valueOf(service.save(pautaDTO)), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Deletando uma pauta pelo ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
         service.deleteById(id);

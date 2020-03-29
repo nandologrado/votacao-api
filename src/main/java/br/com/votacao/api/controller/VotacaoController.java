@@ -4,6 +4,7 @@ import br.com.votacao.api.dto.VotacaoDTO;
 import br.com.votacao.api.dto.VotoRequestDTO;
 import br.com.votacao.api.exception.BusinessException;
 import br.com.votacao.api.service.VotacaoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class VotacaoController {
         this.service = service;
     }
 
+    @ApiOperation(value = "Salva um voto")
     @PostMapping
     ResponseEntity<VotacaoDTO> save(@RequestBody @Valid VotoRequestDTO votoRequestDTO,  Errors errors) {
         if (errors.hasErrors()) {

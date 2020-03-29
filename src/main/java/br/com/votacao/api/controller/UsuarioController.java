@@ -3,6 +3,7 @@ package br.com.votacao.api.controller;
 import br.com.votacao.api.dto.UsuarioDTO;
 import br.com.votacao.api.exception.BusinessException;
 import br.com.votacao.api.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class UsuarioController {
         this.service = service;
     }
 
+    @ApiOperation(value = "Retorna todos os usuários cadastrados")
     @GetMapping
     ResponseEntity<List<UsuarioDTO>> findAll() {
         return new ResponseEntity<>(service.findAll()
@@ -33,11 +35,13 @@ public class UsuarioController {
                 .collect(toList()), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna usuario pelo ID")
     @GetMapping("/{id}")
     ResponseEntity<UsuarioDTO> findById(@PathVariable(value = "id") Long id) {
         return new ResponseEntity<>(UsuarioDTO.valueOf(service.findById(id)), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Salva um usuario")
     @PostMapping
     ResponseEntity<UsuarioDTO> save(@RequestBody @Valid UsuarioDTO usuarioDTO, Errors errors) {
         if (errors.hasErrors()) {

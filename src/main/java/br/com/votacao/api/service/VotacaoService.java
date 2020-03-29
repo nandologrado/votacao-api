@@ -6,10 +6,13 @@ import br.com.votacao.api.entity.Sessao;
 import br.com.votacao.api.entity.Usuario;
 import br.com.votacao.api.entity.Votacao;
 import br.com.votacao.api.entity.VotacaoPK;
+import br.com.votacao.api.exception.AptoVotoException;
 import br.com.votacao.api.exception.SessaoExpiredException;
 import br.com.votacao.api.exception.VotoExistsException;
+import br.com.votacao.api.model.AptoVotoEnum;
 import br.com.votacao.api.model.VotoEnum;
 import br.com.votacao.api.repository.VotacaoRepository;
+import br.com.votacao.api.service.api.UsuarioIntegrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,18 +26,25 @@ public class VotacaoService {
     private final VotacaoRepository repository;
     private final SessaoService sessaoService;
     private final UsuarioService usuarioService;
+    private final UsuarioIntegrationService usuarioIntegrationService;
 
     @Autowired
-    public VotacaoService(VotacaoRepository repository, SessaoService sessaoService, UsuarioService usuarioService) {
+    public VotacaoService(VotacaoRepository repository, SessaoService sessaoService,
+                          UsuarioService usuarioService, UsuarioIntegrationService usuarioIntegrationService) {
         this.repository = repository;
         this.sessaoService = sessaoService;
         this.usuarioService = usuarioService;
+        this.usuarioIntegrationService = usuarioIntegrationService;
     }
 
     @Transactional(readOnly = false)
     public VotacaoDTO save(VotoRequestDTO votoRequestDTO) {
         Sessao sessao = sessaoService.findById(votoRequestDTO.getSessaoId());
         Usuario usuario = usuarioService.findById(votoRequestDTO.getUsuarioId());
+
+        if(usuarioIntegrationService.aptoVotacao(usuario.getCpf()).equals(AptoVotoEnum.ABLE_TO_VOTE)){
+            throw new AptoVotoException(usuario.getCpf());
+        }
 
         if (!sessao.getDataFim().isAfter(LocalDateTime.now())) {
             throw new SessaoExpiredException(sessao.getId());

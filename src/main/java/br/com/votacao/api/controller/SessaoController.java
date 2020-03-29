@@ -5,6 +5,7 @@ import br.com.votacao.api.dto.SessaoRequestDTO;
 import br.com.votacao.api.dto.SessaoResultadoDTO;
 import br.com.votacao.api.exception.BusinessException;
 import br.com.votacao.api.service.SessaoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +28,13 @@ public class SessaoController {
         this.service = service;
     }
 
+    @ApiOperation(value = "Retorna uma sessão pelo ID")
     @GetMapping("/{id}")
     ResponseEntity<SessaoDTO> findById(@PathVariable(value = "id") Long id) {
         return new ResponseEntity<>(SessaoDTO.valueOf(service.findById(id)), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna uma sessão pelo ID da pauta")
     @GetMapping("/pauta/{id}")
     ResponseEntity<List<SessaoDTO>> findByPauta(@PathVariable(value = "id") Long pautaId) {
         return new ResponseEntity<>(service.findByPauta(pautaId)
@@ -40,11 +43,13 @@ public class SessaoController {
                 .collect(toList()), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna o resultado da votação")
     @GetMapping("/{id}/details")
     ResponseEntity<SessaoResultadoDTO> findSessaoDetailsById(@PathVariable(value = "id") Long id) {
         return new ResponseEntity<>(service.findSessaoDetailsById(id), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Salvar uma sessão")
     @PostMapping
     ResponseEntity<SessaoDTO> save(@RequestBody @Valid SessaoRequestDTO sessaoRequestDTO, Errors errors) {
         if (errors.hasErrors()) {
