@@ -14,7 +14,6 @@ public class PautaDTO implements Serializable {
 
     private static final long serialVersionUID = -5463577171309546021L;
 
-
     private Long id;
 
     @NotNull(message = "{pauta.nome.notempty}")
