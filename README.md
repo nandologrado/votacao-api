@@ -55,8 +55,8 @@ mvn spring-boot:run
 ```
 Pronto. A aplicação está disponível em http://localhost:8080
 ```
-Tomcat started on port(s): 8080 (http)
-Started AppConfig in xxxx seconds (JVM running for xxxx)
+Tomcat started on port(s): 8080 (http) with context path ''
+Started VotacaoApiApplication in xxxx seconds (JVM running for xxxx)
 ```
 
 ## Acessar a documentação da aplicação via swagger
@@ -78,7 +78,7 @@ Segue abaixo as APIs disponíveis no projeto:
      - Espera atributos para serem critérios de busca no body da requisição, exemplo:
     ```
 	{
-		"nome":"TESTE",
+		"nome":"teste",
 		"descricao":"ISSO É UM TESTE"
 	}
     ```
@@ -104,7 +104,7 @@ Segue abaixo as APIs disponíveis no projeto:
 	- Espera atributos para serem critérios de busca no body da requisição, exemplo:
     ```
 	{
-		"nome":"",
+		"nome":"fernando",
 		"cpf":"09305748503"
 	}
 	``` 
