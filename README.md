@@ -1,4 +1,4 @@
-# votacao-api
+# Votação API
 
 
 Scripts de criação do banco:
