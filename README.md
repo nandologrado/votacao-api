@@ -1,19 +1,3 @@
-assembléias.
-
-### Como baixar executar a aplicação
-Certifique que o git esteja instalado.
-
-1) Utilizando o git bash selecionar a pasta aonde queira baixar a aplicação e executar a seguinte linha de comando:
-
-git clone 
-
-2) Depois executar 
-
-Scripts de criação do banco:
-DROP DATABASE IF EXISTS votacao_db;
-CREATE DATABASE votacao_db;
-USE votacao_db;
-
 # Votação API
 Api do sistema de votação para decisões tomadas em 
 
